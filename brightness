@@ -1,0 +1,17 @@
+#!/bin/bash
+#file that stores the brightness
+bgFile="/sys/class/backlight/acpi_video0/brightness"
+
+currentValue=$(cat "$bgFile")
+if [ -z $1 ]; then
+	echo $currentValue
+elif [ $1 == "set" ]; then
+	echo $2 > $bgFile
+elif [ $1 == "inc" ]; then
+	echo $(($currentValue+$2)) > $bgFile
+elif [ $1 == "dec" ]; then
+	echo $(($currentValue-$2)) > $bgFile
+else
+	printf "run command without any paraments to get current brightness value.\nuse 'set <int>' to set the brightness.\nuse 'inc <int>' to increase the brightness with the given value.\nuse 'dec <int>' to decrease the brightness with the given value."
+
+fi
